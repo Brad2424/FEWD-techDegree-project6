@@ -15,9 +15,11 @@ const startBtn = document.querySelector('.btn__reset');
 const UL = document.querySelector('#phrase ul');
 const PhraseCharacters =  getRandomPhraseAsArray(phrases);
 const lettersArr = document.getElementsByClassName('letter');
+const showLettersArr = document.getElementsByClassName('show');
+const overlay = document.querySelector('#overlay');
+const title = document.querySelector('.title');
 
 startBtn.addEventListener('click', () => {
-    const overlay = document.querySelector('#overlay');
     overlay.style.display = 'none';
 });
 
@@ -57,6 +59,21 @@ function checkLetter(button) {
     return letterFound;
 }
 
+function checkWin() {
+    if (showLettersArr.length === lettersArr.length) {
+        overlay.style.display = 'flex';
+        overlay.classList.add('win');
+        title.textContent = "You Win! :)";
+    }
+
+    if (missed >= 5) {
+        overlay.style.display = 'flex';
+        overlay.classList.add('lose');
+        title.textContent = "You Lose :(";
+    }
+} 
+        
+
 keyboardDiv.addEventListener('click', (e) => {
     e.target.classList.add('chosen');
     e.target.setAttribute("disabled", "disabled");
@@ -64,4 +81,5 @@ keyboardDiv.addEventListener('click', (e) => {
         if (letterFound === null) {
             missed += 1;
         }
+    checkWin();
 });
