@@ -25,19 +25,18 @@ function getRandomPhraseAsArray(array) {
     return characterArray;
 }
 
-// function addPhraseToDisplay() {
-    
+function addPhraseToDisplay() {
     for (let i = 0; i < randomPhraseCharacters.length; i++) {
         const character = randomPhraseCharacters[i];
-        UL.appendChild('li');
+        const listItem = document.createElement('li');
+        UL.appendChild(listItem);
+        listItem.textContent = character;
     }
-
-// }
-
-
+}
 
 startBtn.addEventListener('click', () => {
     const overlay = document.querySelector('#overlay');
     overlay.style.display = 'none';
-})
+});
 
+addPhraseToDisplay();
