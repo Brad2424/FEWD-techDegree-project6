@@ -14,7 +14,12 @@ const phraseDiv = document.querySelector('#phrase');
 const startBtn = document.querySelector('.btn__reset');
 const UL = document.querySelector('#phrase ul');
 const PhraseCharacters =  getRandomPhraseAsArray(phrases);
-const letters = document.getElementsByClassName('letter');
+const lettersArr = document.getElementsByClassName('letter');
+
+startBtn.addEventListener('click', () => {
+    const overlay = document.querySelector('#overlay');
+    overlay.style.display = 'none';
+});
 
 function getRandomPhraseAsArray(array) {
     function getRandomNum(array) {
@@ -34,29 +39,29 @@ function addPhraseToDisplay(array) {
 
         if (listItem.textContent !== " " ) {
             listItem.classList.add('letter');
+        } else {
+            listItem.classList.add('space');
         }
     }
 }
+addPhraseToDisplay(PhraseCharacters);
 
 function checkLetter(button) {
-    for (let i = 0; i < PhraseCharacters.length; i++) {
-        if (button.textContent === letters[i].textContent) {
-            const matchedLetter = letters[i];
-            matchedLetter.classList.add('show');
+    let letterFound = null;
+        for (let i = 0; i < lettersArr.length; i+= 1) {
+            if (button.textContent === lettersArr[i].textContent) {
+                lettersArr[i].classList.add('show');
+                letterFound = true;
+            }
         }
-    }
+    return letterFound;
 }
 
 keyboardDiv.addEventListener('click', (e) => {
     e.target.classList.add('chosen');
     e.target.setAttribute("disabled", "disabled");
-
     const letterFound = checkLetter(e.target);
+        if (letterFound === null) {
+            missed += 1;
+        }
 });
-
-startBtn.addEventListener('click', () => {
-    const overlay = document.querySelector('#overlay');
-    overlay.style.display = 'none';
-});
-
-addPhraseToDisplay(PhraseCharacters);
