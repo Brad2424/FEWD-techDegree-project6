@@ -22,6 +22,10 @@ const btnKeys = document.querySelectorAll('.keyrow button');
 const phraseList = document.getElementById('phraseList');
 const heartsImgArr = document.querySelectorAll('#scoreboard img');
 
+// function checkArrLength(array) {
+//     return array;
+// }
+
 function getRandomPhraseAsArray(array) {
     function getRandomNum(array) {
         return Math.floor(Math.random() * (array.length));
@@ -45,7 +49,6 @@ function addPhraseToDisplay(array) {
         }
     }
 }
-addPhraseToDisplay(PhraseCharacters);
 
 function checkLetter(button) {
     let letterFound = null;
@@ -61,14 +64,14 @@ function checkLetter(button) {
 function checkWin() {
     if (showLettersArr.length === lettersArr.length) {
         overlay.style.display = 'flex';
-        overlay.classList.add('win');
+        overlay.setAttribute('class', 'win', 'start');
         title.textContent = 'You Win! :)';
         startBtn.textContent = 'Reset Game';
     }
 
     if (missed >= 5) {
         overlay.style.display = 'flex';
-        overlay.classList.add('lose');
+        overlay.setAttribute('class', 'lose', 'start');
         title.textContent = "You Lose :(";
         startBtn.textContent = 'Reset Game';
     }
@@ -76,13 +79,12 @@ function checkWin() {
 
 startBtn.addEventListener('click', () => {
     overlay.style.display = 'none';
-    if (missed >= 5 && lettersArr.length > 0) {
+    PhraseCharacters =  getRandomPhraseAsArray(phrases);
+    addPhraseToDisplay(PhraseCharacters);
+    if (missed >= 5) {
         while (phraseList.firstChild) {
             phraseList.removeChild(phraseList.firstChild);
         }
-        PhraseCharacters =  getRandomPhraseAsArray(phrases);
-        addPhraseToDisplay(PhraseCharacters);
-        missed = 0;
         for (let i = 0; i < heartsImgArr.length; i++) {
             const heartImg = heartsImgArr[i];
             heartImg.setAttribute('src', 'images/liveHeart.png');
@@ -92,6 +94,26 @@ startBtn.addEventListener('click', () => {
             btnKey.classList.remove('chosen');
             btnKey.removeAttribute("disabled");
         }
+        PhraseCharacters =  getRandomPhraseAsArray(phrases);
+        addPhraseToDisplay(PhraseCharacters);
+        missed = 0;
+    }
+    if (missed < 5) {
+        while (phraseList.firstChild) {
+            phraseList.removeChild(phraseList.firstChild);
+        }
+        for (let i = 0; i < heartsImgArr.length; i++) {
+            const heartImg = heartsImgArr[i];
+            heartImg.setAttribute('src', 'images/liveHeart.png');
+        }
+        for (let i = 0; i < btnKeys.length; i++) {
+            const btnKey = btnKeys[i];
+            btnKey.classList.remove('chosen');
+            btnKey.removeAttribute("disabled");
+        }
+        PhraseCharacters =  getRandomPhraseAsArray(phrases);
+        addPhraseToDisplay(PhraseCharacters);
+        missed = 0;
     }
 });
         
