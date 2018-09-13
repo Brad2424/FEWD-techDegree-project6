@@ -1,5 +1,5 @@
 let missed = 0;
-let phrases = [
+const phrases = [
     'how long is a peice of string',
     'as far as the eye can see',
     'it is not over until the fat lady sings',
@@ -61,19 +61,20 @@ function checkLetter(button) {
     return letterFound;
 }
 
+function setDisplay(className, titleText) {
+    overlay.style.display = 'flex';
+    overlay.setAttribute('class', className , 'start');
+    title.textContent = titleText;
+    startBtn.textContent = 'Reset Game';
+ }
+
 function checkWin() {
     if (showLettersArr.length === lettersArr.length) {
-        overlay.style.display = 'flex';
-        overlay.setAttribute('class', 'win', 'start');
-        title.textContent = 'You Win! :)';
-        startBtn.textContent = 'Reset Game';
+        setDisplay('win', 'You Win! :)')
     }
 
     if (missed >= 5) {
-        overlay.style.display = 'flex';
-        overlay.setAttribute('class', 'lose', 'start');
-        title.textContent = "You Lose :(";
-        startBtn.textContent = 'Reset Game';
+        setDisplay('lose', 'You lose :(')
     }
 } 
 
